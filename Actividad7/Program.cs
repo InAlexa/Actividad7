@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 
 class Program
 {
@@ -172,11 +172,60 @@ class Program
 
     static void CalcularModa()
     {
-        Console.WriteLine("No lo supe hacer.");
+        if (listaDeNumeros.Count == 0)
+        {
+            Console.WriteLine("La lista está vacía.");
+            return;
+        }
+
+        Dictionary<int, int> frecuencia = new Dictionary<int, int>();
+
+        foreach (int numero in listaDeNumeros)  // calcular la frecuencia de cada número
+        {
+            if (frecuencia.ContainsKey(numero))
+            {
+                frecuencia[numero]++;
+            }
+            else
+            {
+                frecuencia[numero] = 1;
+            }
+        }
+
+        int maximaFrecuencia = 0;         // Encontrar la frecuencia máxima
+        foreach (var par in frecuencia)
+        {
+            if (par.Value > maximaFrecuencia)
+            {
+                maximaFrecuencia = par.Value;
+            }
+        }
+
+        List<int> modas = new List<int>();         // Encontrar los números con la frecuencia máxima
+        foreach (var par in frecuencia)
+        {
+            if (par.Value == maximaFrecuencia)
+            {
+                modas.Add(par.Key);
+            }
+        }
+
+        Console.WriteLine("La moda es: " + string.Join(", ", modas));
     }
+
 
     static void CalcularDesviacionEstandar()
     {
-        Console.WriteLine("Tampoco lo supe hacer");
+        if (listaDeNumeros.Count == 0)
+        {
+            Console.WriteLine("La lista está vacía.");
+            return;
+        }
+
+        double media = listaDeNumeros.Average();
+        double sumaCuadrados = listaDeNumeros.Select(num => Math.Pow(num - media, 2)).Sum();
+        double desviacionEstandar = Math.Sqrt(sumaCuadrados / listaDeNumeros.Count);
+
+        Console.WriteLine("La desviación estándar es: " + desviacionEstandar);
     }
 }
